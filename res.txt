@@ -1,0 +1,26 @@
+x1=0
+x1=-4.39 x2=-1.19
+x1=2.9 x2=0.377
+No roots
+No roots
+x1=-1
+No roots
+x1=-0.5
+Any number
+x1=0
+x1=-1 x2=0
+No roots
+No roots
+x1=0.0351 x2=-0.828
+x1=2.35 x2=9.54
+x1=0.261 x2=-3.13
+No roots
+x1=0.0842 x2=-0.848
+x1=-2.67 x2=-0.316
+x1=0
+x1=0 x2=-1
+No roots
+x1=0
+No roots
+x1=-1
+No roots

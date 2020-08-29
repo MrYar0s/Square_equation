@@ -1,25 +1,26 @@
+#pragma once
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
 
+//! A constant denoting that the equation has an infinite number of roots
 #define INF_ROOTS -1
+//! A constant to help compare a number with zero
 #define BORDER 1e-5
 
 int SolveEquation(double a, double b, double c, double* x1, double* x2);
-int Compare(double p);
 void unit_test();
+int Compare(double p);
 
-/*----------------------------------------------------------------------*/
 //! Print roots of equation
 //! @param [in]  Num_Roots
-//! @param [in]  x1
-//! @param [in]  x2
+//! @param [in]  x1 The first root 
+//! @param [in]  x2 The second root
 //!
 //!
 //! in case of infinite number of roots,
 //! returns INF_ROOTS.
-/*----------------------------------------------------------------------*/
 
 int main(){
 
@@ -66,8 +67,6 @@ int main(){
 	return 0;
 }
 
-/*----------------------------------------------------------------------*/
-/*function to solve a square equation*/
 //! Solves a square equation ax2+bx+c = 0
 //! @param [in]  a    a - coefficient
 //! @param [in]  b    b - coefficient
@@ -79,7 +78,6 @@ int main(){
 //!
 //! in case of infinite number of roots,
 //! returns INF_ROOTS.
-/*----------------------------------------------------------------------*/
 
 int SolveEquation(double a, double b, double c, double* x1, double* x2) 
 {
@@ -140,7 +138,6 @@ int SolveEquation(double a, double b, double c, double* x1, double* x2)
 			double d = b * b - 4 * a * c;
 			double sqrt_d = sqrt(d);
 			Compare(d);
-			Compare(sqrt_d);
 			if (d == 0)
 			{
 				*x1 = *x2 = -b / (2 * a);
@@ -167,12 +164,17 @@ int SolveEquation(double a, double b, double c, double* x1, double* x2)
 		}
 	}
 }
+
+//! This function checks correct of this program
+//!	@param [in] input opens in.TXT
+//! @param [out] res opens res.TXT
+
 void unit_test()
 {
 	FILE* input;
 	FILE* res;
 	input = fopen("in.TXT", "r");
-	res = fopen("res.txt", "w");
+	res = fopen("res.TXT", "w");
 
 	double a, b, c, x1, x2;
 
@@ -209,6 +211,7 @@ void unit_test()
 	fclose(res);
 	fclose(input);
 }
+//! A function to help compare a number with zero
 int Compare(double p)
 {
 	if (p >= -BORDER && p <= BORDER)

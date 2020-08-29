@@ -2,7 +2,7 @@
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
-
+//OLD
 #define INF_ROOTS -1
 #define BORDER 1e-20
 

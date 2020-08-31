@@ -181,8 +181,13 @@ void unit_test()
 	a = b = c = 0;
 	x1 = x2 = 0;
 	int num_of_roots = 0;
-	while (fscanf(input, "%lg %lg %lg", &a, &b, &c) > 0)
+	while (int check = fscanf(input, "%lg %lg %lg", &a, &b, &c) > 0)
 	{
+		if (check != 3) 
+	{
+		printf("ERROR: You entered wrong coefficients");
+		return 0;
+	}
 
 		Compare(a);
 		Compare(b);

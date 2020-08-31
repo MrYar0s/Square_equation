@@ -40,10 +40,6 @@ int main(){
 		return 0;
 	}
 
-	Compare(a);
-	Compare(b);
-	Compare(c);
-
 	int num_of_roots = SolveEquation(a, b, c, &x1, &x2);
 
 	assert(isfinite(x1));
@@ -89,6 +85,10 @@ int SolveEquation(double a, double b, double c, double* x1, double* x2)
 	assert(x1 != NULL);
 	assert(x2 != NULL);
 	assert(x1 != x2);
+	
+	Compare(a);
+	Compare(b);
+	Compare(c);
 
 	if (a == 0) 
 	{

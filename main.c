@@ -83,84 +83,190 @@ int SolveEquation(double a, double b, double c, double* x1, double* x2)
 	assert(isfinite(c));
 
 	assert(x1 != NULL);
-	assert(x2 != NULL);
-	assert(x1 != x2);
-	
+	#pragma once
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <stdlib.h>
+
+//! A constant denoting that the equation has an infinite number of roots
+#define INF_ROOTS -1
+//! A constant to help compare a number with zero
+#define BORDER 1e-5
+
+int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
+int SolveLineEquation(double a, double b, double c, double* x1);
+void unit_test();
+int Compare(double p);
+
+//! Print roots of equation
+//! @param [in]  Num_Roots
+//! @param [in]  x1 The first root 
+//! @param [in]  x2 The second root
+//!
+//!
+//! in case of infinite number of roots,
+//! returns INF_ROOTS.
+
+int main() {
+
+	unit_test();
+
+	double a, b, c, x1, x2;
+	int num_of_roots = 0;
+
+	a = b = c = 0;
+	x1 = x2 = 0;
+
+	printf("Enter equation coefficients\n");
+	int check = scanf("%lg %lg %lg", &a, &b, &c);
+
+	if (check != 3)
+	{
+		printf("ERROR: You entered wrong coefficients");
+		return 0;
+	}
+	Compare(a);
+	if (a == 0) 
+	{
+		num_of_roots = SolveLineEquation(a, b, c, &x1);
+	}
+	else 
+	{
+		num_of_roots = SolveSquareEquation(a, b, c, &x1, &x2);
+	}
+	assert(isfinite(x1));
+	assert(isfinite(x2));
+
+
+	switch (num_of_roots)
+	{
+	case 0: printf("No roots\n");
+		break;
+	case 1: printf("x1=%.3lg\n", x1);
+		break;
+	case 2: printf("x1=%.3lg ", x1);
+		printf("x2=%.3lg\n", x2);
+		break;
+	case INF_ROOTS: printf("Any number");
+		break;
+	default: printf("ERROR: number of roots = %d", num_of_roots);
+		return 1;
+	}
+	return 0;
+}
+
+//! Solves a line equation bx+c = 0
+//! @param [in]  b    b - coefficient
+//! @param [in]  c    c - coefficient
+//! @param [out] x1   Pointer to the first root
+//!
+//! return number of roots
+//!
+//! in case of infinite number of roots,
+//! returns INF_ROOTS.
+
+int SolveLineEquation(double a, double b, double c, double* x1) 
+{
+	assert(isfinite(a));
+	assert(isfinite(b));
+	assert(isfinite(c));
+
+	assert(x1 != NULL);
+
 	Compare(a);
 	Compare(b);
 	Compare(c);
-
-	if (a == 0) 
+	if (b == 0)
 	{
-		if (b == 0)
+		return (c == 0) ? INF_ROOTS : 0;
+	}
+	else
+	{
+		if (c != 0)
 		{
-			return (c == 0) ? INF_ROOTS : 0;
+			*x1 = -c / b;
+			return 1;
+		}
+		else {
+			*x1 = 0;
+			return 1;
+		}
+	}
+}
+
+//! Solves a square equation ax2+bx+c = 0
+//! @param [in]  a    a - coefficient
+//! @param [in]  b    b - coefficient
+//! @param [in]  c    c - coefficient
+//! @param [out] x1   Pointer to the first root
+//! @param [out] x2   Pointer to the second root
+//!
+//! return number of roots
+//!
+//! in case of infinite number of roots,
+//! returns INF_ROOTS.
+
+int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
+{
+	assert(isfinite(a));
+	assert(isfinite(b));
+	assert(isfinite(c));
+
+	assert(x1 != NULL);
+	assert(x2 != NULL);
+	assert(x1 != x2);
+
+	Compare(a);
+	Compare(b);
+	Compare(c);
+	if (b == 0)
+	{
+
+		if (c == 0)
+		{
+			*x1 = 0;
+			return 1;
 		}
 		else
 		{
-			if (c != 0)
+			if (Compare(-c / a) > BORDER)
 			{
-				*x1 = -c / b;
+				*x1 = sqrt(-c / a);
 				return 1;
 			}
-			else {
-				*x1 = 0;
-				return 1;
+			else
+			{
+				return 0;
 			}
 		}
 	}
 	else
 	{
-		if (b == 0)
+		double d = b * b - 4 * a * c;
+		double sqrt_d = sqrt(d);
+		Compare(d);			if (d == 0)
 		{
-			
-			if (c == 0)
+			*x1 = *x2 = -b / (2 * a);
+			return 1;
+		}
+		else if (d < BORDER)
+		{
+			return 0;
+		}
+		else
+		{
+			*x1 = (-b - sqrt_d) / (2 * a);
+			*x2 = (-b + sqrt_d) / (2 * a);
+			if (*x1 == -0)
 			{
 				*x1 = 0;
-				return 1;
 			}
-			else
+			if (*x2 == -0)
 			{
-				if (Compare(-c / a) > BORDER) 
-				{
-					*x1 = sqrt(-c / a);
-					return 1;
-				}
-				else 
-				{
-					return 0;
-				}
+				*x2 = 0;
 			}
-
-		}
-		else 
-		{
-			double d = b * b - 4 * a * c;
-			double sqrt_d = sqrt(d);
-			Compare(d);
-			if (d == 0)
-			{
-				*x1 = *x2 = -b / (2 * a);
-				return 1;
-			}
-			else if (d < BORDER)
-			{
-				return 0;
-			}
-			else
-			{
-				*x1 = (-b - sqrt_d) / (2 * a);
-				*x2 = (-b + sqrt_d) / (2 * a);
-				if (*x1 == -0) 
-				{
-					*x1 = 0;
-				}
-				if (*x2 == -0) 
-				{
-					*x2 = 0;
-				}
-				return 2;
-			}
+			return 2;
 		}
 	}
 }
@@ -184,10 +290,14 @@ void unit_test()
 	while (fscanf(input, "%lg %lg %lg", &a, &b, &c) > 0)
 	{
 		Compare(a);
-		Compare(b);
-		Compare(c);
-
-		int num_of_roots = SolveEquation(a, b, c, &x1, &x2);
+		if (a == 0)
+		{
+			num_of_roots = SolveLineEquation(a, b, c, &x1);
+		}
+		else
+		{
+			num_of_roots = SolveSquareEquation(a, b, c, &x1, &x2);
+		}
 
 		assert(isfinite(x1));
 		assert(isfinite(x2));

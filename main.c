@@ -10,7 +10,7 @@
 #define BORDER 1e-5
 
 int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
-int SolveLineEquation(double a, double b, double c, double* x1);
+int SolveLineEquation(double b, double c, double* x1);
 void unit_test();
 int Compare(double p);
 
@@ -44,7 +44,7 @@ int main() {
 	Compare(a);
 	if (a == 0) 
 	{
-		num_of_roots = SolveLineEquation(a, b, c, &x1);
+		num_of_roots = SolveLineEquation(b, c, &x1);
 	}
 	else 
 	{
@@ -81,15 +81,13 @@ int main() {
 //! in case of infinite number of roots,
 //! returns INF_ROOTS.
 
-int SolveLineEquation(double a, double b, double c, double* x1) 
+int SolveLineEquation(double b, double c, double* x1) 
 {
-	assert(isfinite(a));
 	assert(isfinite(b));
 	assert(isfinite(c));
 
 	assert(x1 != NULL);
 
-	Compare(a);
 	Compare(b);
 	Compare(c);
 	if (b == 0)
@@ -207,7 +205,7 @@ void unit_test()
 		Compare(a);
 		if (a == 0)
 		{
-			num_of_roots = SolveLineEquation(a, b, c, &x1);
+			num_of_roots = SolveLineEquation(b, c, &x1);
 		}
 		else
 		{

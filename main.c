@@ -12,11 +12,11 @@
 int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
 int SolveLineEquation(double b, double c, double* x1);
 void unit_test();
-int Compare(double p);
+int Compare(double* p);
 
 //! Print roots of equation
 //! @param [in]  Num_Roots
-//! @param [in]  x1 The first root 
+//! @param [in]  x1 The first root
 //! @param [in]  x2 The second root
 //!
 //!
@@ -24,29 +24,28 @@ int Compare(double p);
 //! returns INF_ROOTS.
 
 int main() {
+	int num_of_roots = 0;
 
 	unit_test();
 
 	double a, b, c, x1, x2;
-	int num_of_roots = 0;
-
 	a = b = c = 0;
 	x1 = x2 = 0;
 
 	printf("Enter equation coefficients\n");
 	int check = scanf("%lg %lg %lg", &a, &b, &c);
-
-	if (check != 3)
-	{
-		printf("ERROR: You entered wrong coefficients");
-		return 0;
+	while (check != 3) {
+		check = scanf("%lg %lg %lg", &a, &b, &c);
+		printf("ERROR: You entered wrong coefficients\n");
+        fflush(stdin);
 	}
-	Compare(a);
-	if (a == 0) 
+
+	Compare(&a);
+	if (a == 0)
 	{
 		num_of_roots = SolveLineEquation(b, c, &x1);
 	}
-	else 
+	else
 	{
 		num_of_roots = SolveSquareEquation(a, b, c, &x1, &x2);
 	}
@@ -81,15 +80,15 @@ int main() {
 //! in case of infinite number of roots,
 //! returns INF_ROOTS.
 
-int SolveLineEquation(double b, double c, double* x1) 
+int SolveLineEquation(double b, double c, double* x1)
 {
 	assert(isfinite(b));
 	assert(isfinite(c));
 
 	assert(x1 != NULL);
 
-	Compare(b);
-	Compare(c);
+	Compare(&b);
+	Compare(&c);
 	if (b == 0)
 	{
 		return (c == 0) ? INF_ROOTS : 0;
@@ -130,9 +129,9 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 	assert(x2 != NULL);
 	assert(x1 != x2);
 
-	Compare(a);
-	Compare(b);
-	Compare(c);
+	Compare(&a);
+	Compare(&b);
+	Compare(&c);
 	if (b == 0)
 	{
 
@@ -143,9 +142,10 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 		}
 		else
 		{
-			if (Compare(-c / a) > BORDER)
+			double u = -c / a;
+			if (Compare(&u) > BORDER)
 			{
-				*x1 = sqrt(-c / a);
+				*x1 = sqrt(u);
 				return 1;
 			}
 			else
@@ -158,7 +158,8 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 	{
 		double d = b * b - 4 * a * c;
 		double sqrt_d = sqrt(d);
-		Compare(d);			if (d == 0)
+		Compare(&d);
+		if (d == 0)
 		{
 			*x1 = *x2 = -b / (2 * a);
 			return 1;
@@ -202,7 +203,7 @@ void unit_test()
 	int num_of_roots = 0;
 	while (fscanf(input, "%lg %lg %lg", &a, &b, &c) > 0)
 	{
-		Compare(a);
+		Compare(&a);
 		if (a == 0)
 		{
 			num_of_roots = SolveLineEquation(b, c, &x1);
@@ -234,11 +235,11 @@ void unit_test()
 	fclose(input);
 }
 //! A function to help compare a number with zero
-int Compare(double p)
+int Compare(double* p)
 {
-	if (p >= -BORDER && p <= BORDER)
+	if (*p >= -BORDER && *p <= BORDER)
 	{
-		p = 0;
+		*p = 0;
 	}
 	return 0;
 }

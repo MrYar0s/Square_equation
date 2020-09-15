@@ -12,7 +12,7 @@
 int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
 int SolveLineEquation(double b, double c, double* x1);
 void unit_test();
-int Compare(double* p);
+int Compare(double p);
 
 //! Print roots of equation
 //! @param [in]  Num_Roots
@@ -40,8 +40,7 @@ int main() {
         fflush(stdin);
 	}
 
-	Compare(&a);
-	if (a == 0)
+	if (Compare(a))
 	{
 		num_of_roots = SolveLineEquation(b, c, &x1);
 	}
@@ -86,22 +85,20 @@ int SolveLineEquation(double b, double c, double* x1)
 	assert(isfinite(c));
 
 	assert(x1 != NULL);
-
-	Compare(&b);
-	Compare(&c);
-	if (b == 0)
+	
+	if (Compare(b))
 	{
-		return (c == 0) ? INF_ROOTS : 0;
+		return (Compare(c)) ? INF_ROOTS : 0;
 	}
 	else
 	{
-		if (c != 0)
+		if (Compare(c))
 		{
-			*x1 = -c / b;
+			*x1 = 0;
 			return 1;
 		}
 		else {
-			*x1 = 0;
+			*x1 = -c / b;
 			return 1;
 		}
 	}
@@ -129,13 +126,10 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 	assert(x2 != NULL);
 	assert(x1 != x2);
 
-	Compare(&a);
-	Compare(&b);
-	Compare(&c);
-	if (b == 0)
+	if (Compare(b))
 	{
 
-		if (c == 0)
+		if (Compare(c))
 		{
 			*x1 = 0;
 			return 1;
@@ -143,7 +137,7 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 		else
 		{
 			double u = -c / a;
-			if (Compare(&u) > BORDER)
+			if (u > BORDER)
 			{
 				*x1 = sqrt(u);
 				return 1;
@@ -158,8 +152,7 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 	{
 		double d = b * b - 4 * a * c;
 		double sqrt_d = sqrt(d);
-		Compare(&d);
-		if (d == 0)
+		if (Compare(d))
 		{
 			*x1 = *x2 = -b / (2 * a);
 			return 1;
@@ -203,8 +196,7 @@ void unit_test()
 	int num_of_roots = 0;
 	while (fscanf(input, "%lg %lg %lg", &a, &b, &c) > 0)
 	{
-		Compare(&a);
-		if (a == 0)
+		if (Compare(a))
 		{
 			num_of_roots = SolveLineEquation(b, c, &x1);
 		}
@@ -235,11 +227,11 @@ void unit_test()
 	fclose(input);
 }
 //! A function to help compare a number with zero
-int Compare(double* p)
+int Compare(double p)
 {
-	if (*p >= -BORDER && *p <= BORDER)
+	if (p >= -BORDER && p <= BORDER)
 	{
-		*p = 0;
+		return 1;
 	}
 	return 0;
 }

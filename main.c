@@ -37,7 +37,7 @@ int main() {
 	while (check != 3) {
 		check = scanf("%lg %lg %lg", &a, &b, &c);
 		printf("ERROR: You entered wrong coefficients\n");
-        fflush(stdin);
+        	fflush(stdin);
 	}
 
 	if (Compare(a))

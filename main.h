@@ -1,4 +1,18 @@
 #pragma once
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <stdlib.h>
+
+//! A constant denoting that the equation has an infinite number of roots
+#define INF_ROOTS -1
+//! A constant to help compare a number with zero
+#define BORDER 1e-5
+
+int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
+int SolveLineEquation(double b, double c, double* x1);
+void unit_test();
+int Compare(double p);
 
 /*! \file in.TXT
 	\brief Text document with a set of numbers to input.

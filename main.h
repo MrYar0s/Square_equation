@@ -9,9 +9,33 @@
 //! A constant to help compare a number with zero
 #define BORDER 1e-5
 
+//! Solves a square equation ax2+bx+c = 0
+//! @param [in]  a    a - coefficient
+//! @param [in]  b    b - coefficient
+//! @param [in]  c    c - coefficient
+//! @param [out] x1   Pointer to the first root
+//! @param [out] x2   Pointer to the second root
+//!
+//! return number of roots
+//!
+//! in case of infinite number of roots,
+//! returns INF_ROOTS.
 int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
+//! Solves a line equation bx+c = 0
+//! @param [in]  b    b - coefficient
+//! @param [in]  c    c - coefficient
+//! @param [out] x1   Pointer to the first root
+//!
+//! return number of roots
+//!
+//! in case of infinite number of roots,
+//! returns INF_ROOTS.
 int SolveLineEquation(double b, double c, double* x1);
+//! This function checks correct of this program
+//!	@param [in] input opens in.TXT
+//! @param [out] res opens res.TXT
 void unit_test();
+//! A function to help compare a number with zero
 int Compare(double p);
 
 /*! \file in.TXT

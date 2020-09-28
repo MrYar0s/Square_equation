@@ -1,19 +1,4 @@
-#pragma once
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
-#include <stdlib.h>
-
-//! A constant denoting that the equation has an infinite number of roots
-#define INF_ROOTS -1
-//! A constant to help compare a number with zero
-#define BORDER 1e-5
-
-int SolveSquareEquation(double a, double b, double c, double* x1, double* x2);
-int SolveLineEquation(double b, double c, double* x1);
-void unit_test();
-int Compare(double p);
-
+#include "math.h"
 //! Print roots of equation
 //! @param [in]  Num_Roots
 //! @param [in]  x1 The first root
@@ -69,16 +54,6 @@ int main() {
 	return 0;
 }
 
-//! Solves a line equation bx+c = 0
-//! @param [in]  b    b - coefficient
-//! @param [in]  c    c - coefficient
-//! @param [out] x1   Pointer to the first root
-//!
-//! return number of roots
-//!
-//! in case of infinite number of roots,
-//! returns INF_ROOTS.
-
 int SolveLineEquation(double b, double c, double* x1)
 {
 	assert(isfinite(b));
@@ -103,18 +78,6 @@ int SolveLineEquation(double b, double c, double* x1)
 		}
 	}
 }
-
-//! Solves a square equation ax2+bx+c = 0
-//! @param [in]  a    a - coefficient
-//! @param [in]  b    b - coefficient
-//! @param [in]  c    c - coefficient
-//! @param [out] x1   Pointer to the first root
-//! @param [out] x2   Pointer to the second root
-//!
-//! return number of roots
-//!
-//! in case of infinite number of roots,
-//! returns INF_ROOTS.
 
 int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 {
@@ -178,10 +141,6 @@ int SolveSquareEquation(double a, double b, double c, double* x1, double* x2)
 	}
 }
 
-//! This function checks correct of this program
-//!	@param [in] input opens in.TXT
-//! @param [out] res opens res.TXT
-
 void unit_test()
 {
 	FILE* input;
@@ -226,7 +185,6 @@ void unit_test()
 	fclose(res);
 	fclose(input);
 }
-//! A function to help compare a number with zero
 int Compare(double p)
 {
 	if (p >= -BORDER && p <= BORDER)

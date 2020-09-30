@@ -1,4 +1,4 @@
-#include "math.h"
+#include "main.h"
 //! Print roots of equation
 //! @param [in]  Num_Roots
 //! @param [in]  x1 The first root
